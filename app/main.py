@@ -1,19 +1,15 @@
 """Application bootstrap entrypoint."""
 
-from app.db.base import Base
-from app.db.session import engine
-from app.db import models  # noqa: F401  # Ensure model metadata is loaded.
+from __future__ import annotations
 
-
-def bootstrap() -> None:
-    """Initialize application resources for local MVP startup."""
-    Base.metadata.create_all(bind=engine)
+from app.config import DATABASE_URL
+from app.db.init_db import init_database
 
 
 def main() -> None:
-    """Run minimal startup routine."""
-    bootstrap()
-    print("Application bootstrap completed.")
+    """Run minimal startup routine for local MVP bootstrap."""
+    init_database()
+    print(f"Application bootstrap completed. Database initialized at: {DATABASE_URL}")
 
 
 if __name__ == "__main__":
